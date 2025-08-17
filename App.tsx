@@ -9,6 +9,7 @@ import { Button } from './components/Button';
 import { Loader } from './components/Loader';
 import { SparklesIcon } from './components/icons/SparklesIcon';
 import { generateSummary } from './services/geminiService';
+import { Analytics } from "@vercel/analytics/next"
 
 const App: React.FC = () => {
   const [transcript, setTranscript] = useState<string>('');
