@@ -1,19 +1,13 @@
+
 import { GoogleGenAI } from "@google/genai";
 
-// Lazily initialize to avoid crashing the app on load if API_KEY is missing.
-let ai: GoogleGenAI | null = null;
+const API_KEY = process.env.API_KEY;
 
-const getAiClient = () => {
-  if (!ai) {
-    const API_KEY = process.env.API_KEY;
-    if (!API_KEY) {
-      // This error will be caught by the calling function and displayed in the UI.
-      throw new Error("The API_KEY environment variable is not set. Please configure it in your deployment environment settings.");
-    }
-    ai = new GoogleGenAI({ apiKey: API_KEY });
-  }
-  return ai;
+if (!API_KEY) {
+  throw new Error("API_KEY environment variable not set");
 }
+
+const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 export async function generateSummary(transcript: string, customPrompt: string): Promise<string> {
   const model = 'gemini-2.5-flash';
@@ -31,8 +25,7 @@ export async function generateSummary(transcript: string, customPrompt: string):
   `;
 
   try {
-    const aiClient = getAiClient();
-    const response = await aiClient.models.generateContent({
+    const response = await ai.models.generateContent({
         model: model,
         contents: fullPrompt,
         config: {
@@ -45,11 +38,6 @@ export async function generateSummary(transcript: string, customPrompt: string):
     return response.text;
   } catch (error) {
     console.error("Error generating summary with Gemini API:", error);
-    // Propagate the specific API key error from getAiClient
-    if (error instanceof Error && error.message.includes("API_KEY")) {
-        throw error;
-    }
-    // Provide a more generic error for other API/network issues.
-    throw new Error("Failed to generate summary. The API call failed. Please check your network connection or the service status.");
+    throw new Error("Failed to generate summary. Please check your API key and network connection.");
   }
 }

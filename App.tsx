@@ -1,6 +1,5 @@
 
 import React, { useState, useCallback } from 'react';
-import { Analytics } from '@vercel/analytics/react';
 import { Header } from './components/Header';
 import { TranscriptInput } from './components/TranscriptInput';
 import { PromptInput } from './components/PromptInput';
@@ -79,7 +78,6 @@ const App: React.FC = () => {
           </div>
         </div>
       </main>
-      <Analytics />
     </div>
   );
 };
