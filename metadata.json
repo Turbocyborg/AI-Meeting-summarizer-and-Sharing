@@ -1,0 +1,5 @@
+{
+  "name": "AI Meeting Summarizer",
+  "description": "An AI-powered application to summarize meeting transcripts. Users can upload a transcript, provide a custom prompt, generate an editable summary, and share it via email.",
+  "requestFramePermissions": []
+}
