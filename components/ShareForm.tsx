@@ -24,8 +24,8 @@ export const ShareForm: React.FC<ShareFormProps> = ({ summaryText }) => {
       subject
     )}&body=${encodeURIComponent(body)}`;
     
-    // Using window.open() can be more reliable than changing location.href
-    window.open(mailtoLink);
+    // Using location.href is a more reliable way to trigger mailto links
+    window.location.href = mailtoLink;
   };
 
   const handleCopyToClipboard = () => {
